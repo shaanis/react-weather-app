@@ -1,0 +1,124 @@
+.fa-solid{
+   
+   margin-right: -10px;
+    color: #a4b2ea;
+    cursor: pointer;
+}
+input {
+    all: unset;
+    background-color: #cbcbcc;
+    outline: none;
+    border: none;
+    background: #cbcbcc;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    margin-left: -15px;
+    padding-left: 10px; /* Adjust this value as needed */
+  }
+  
+
+  .climateIcon{
+    width: 60px;
+    height: 60px;
+    margin-top: 50px;
+}
+.degree{
+    font-size: 35px;
+}
+.symbol{
+    color: #7d7d7e;
+}
+hr{ width: 200px;
+      border: 1px solid #636161;
+       margin: 2px 0;}
+.date{
+    font-size: 14px;
+}
+.grid{
+    
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    margin-left: 30px;
+    margin-right: 30px;
+    row-gap: 40px;
+    column-gap: -10px;
+    padding: 0 30px;
+
+
+}
+.insideGridtext{
+    font-size: 13px;
+    color: white;
+    margin-left: 10px;
+}
+.insideGridtext1{
+    font-size: 13px;
+    margin-top: -8px;
+    margin-left: 3px;
+    color: white;
+}
+.digit{
+    color: white;
+    margin-left: 10px;
+    margin-top: -10px;
+    font-weight: 100;
+
+}
+.cmpny{
+    font-size: 12px;
+    margin-left: 60px;
+    margin-top: 20px;
+}
+.cmpnyname{
+    color: #a4b2ea;
+}
+.gridElement{
+    background-color: #5060a6;
+    width:  160px;
+    height: 90px;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+.gridBg{
+
+    width: 93%;
+    height: 100%;
+    background-color:#ececec ;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+      
+}
+.bgDiv{
+     background-color: #d3cccc; height: 100vh; width: 100%; 
+}
+
+@media (max-width: 768px) {
+    .bgDiv{
+        height: 1100px;
+    }
+    .media{
+        display: flex;
+        flex-direction: column;
+        
+    }
+    .grid{
+        justify-items: center;
+        gap: 10px;
+        grid-template-columns: repeat(2,1fr);
+        margin: 0;
+        
+    }
+    .gridElement{
+        width: 100px;
+        font-size: 12px;
+    }
+    .tempHead{
+        font-size: 9px;
+        font-weight: 100;
+    }
+    .gridBg{
+        margin-top: 10px;
+      border-radius: 5px;
+    }
+}
