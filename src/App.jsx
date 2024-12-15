@@ -132,7 +132,7 @@ function App() {
             {/* grid Elements */}
             {weatherData && (
               <>
-                <div className="grid mt-5">
+                <div className="grid mt-2">
                   <div
                     
                     className="gridElement"
