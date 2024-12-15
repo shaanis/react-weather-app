@@ -127,12 +127,12 @@ const sunset =
                 </p>
                 <p>{weatherData.weather[0].description}</p>
                 <hr className="mb-4" />
-                <p className="date">{formattedDate || "-- -- ----"}</p>
+                <p className="date">{formattedDate }</p>
                 <p
                   style={{ marginTop: "-10px", fontSize: "15px" }}
                   className="day"
                 >
-                  {localTime || "-- : -- --"}
+                  {localTime}
                 </p>
                 <p className="mt-5">{weatherData.name}</p>
               </>
