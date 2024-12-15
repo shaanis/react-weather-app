@@ -102,11 +102,15 @@ hr{ width: 200px;
         flex-direction: column;
         
     }
+    .searchDiv{
+      border-radius: 5px;
+    }
     .grid{
         justify-items: center;
         gap: 10px;
         grid-template-columns: repeat(2,1fr);
         margin: 0;
+        width: 350px;
         
     }
     .gridElement{
@@ -121,4 +125,5 @@ hr{ width: 200px;
         margin-top: 10px;
       border-radius: 5px;
     }
+    
 }

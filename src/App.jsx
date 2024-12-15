@@ -66,7 +66,6 @@ function App() {
   return (
     <>
       <div
-       
         className="d-flex justify-content-center align-items-center bgDiv"
       >
         <div
@@ -81,7 +80,7 @@ function App() {
               borderTopLeftRadius: "5px",
               borderBottomLeftRadius: "5px",
             }}
-            className="d-flex flex-column align-items-center "
+            className="d-flex flex-column align-items-center searchDiv"
           >
             <div
               style={{
