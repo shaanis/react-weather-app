@@ -22,7 +22,6 @@ function App() {
     name: "City Name",
     timezone: 0,
   });
-  // const initialCity = "Edappal";
   const fetchWeather = async (city) => {
     const response = await fetch(
       `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=59fe6f8350cda8bdb8b5bec4e8abbcd5`
@@ -60,9 +59,25 @@ function App() {
   const formattedDate = formatDate(currentDate);
   const localTime = weatherData ? getLocalTime(weatherData.timezone) : "";
 
-  // useEffect(() => {
-  //   fetchWeather(initialCity); // Fetch weather for the initial city when the component mounts
-  // }, []);
+
+  const sunrise =
+  weatherData.sys?.sunrise &&
+  new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+const sunset =
+  weatherData.sys?.sunset &&
+  new Date(weatherData.sys.sunset * 1000).toLocaleTimeString("en-US", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+
+
+  
   return (
     <>
       <div
@@ -112,12 +127,12 @@ function App() {
                 </p>
                 <p>{weatherData.weather[0].description}</p>
                 <hr className="mb-4" />
-                <p className="date">{formattedDate}</p>
+                <p className="date">{formattedDate || "-- -- ----"}</p>
                 <p
                   style={{ marginTop: "-10px", fontSize: "15px" }}
                   className="day"
                 >
-                  {localTime}
+                  {localTime || "-- : -- --"}
                 </p>
                 <p className="mt-5">{weatherData.name}</p>
               </>
@@ -209,11 +224,11 @@ function App() {
                     <p className="insideGridtext">Sun</p>
                     <div className="d-flex">
                       <p className="insideGridtext1">Rise</p>
-                      <p className="digit"></p>
+                      <p className="digit">{sunrise || "0:00 Am"}</p>
                     </div>
                     <div className="d-flex">
                       <p className="insideGridtext1">Set</p>
-                      <p className="digit">31°c</p>
+                      <p className="digit">{sunset || "0:00 Am"}</p>
                     </div>
                   </div>
 
