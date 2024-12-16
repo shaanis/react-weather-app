@@ -1,10 +1,28 @@
 import "./App.css";
-import sunClimate from "./assets/weather.svg";
 import uparrow from "./assets/uparrow.png";
 import dowarrow from "./assets/downarrow.png";
+
+import cloudy from "./assets/cloudy.png";
+import rain from "./assets/rain.png";
+import haze from "./assets/haze.png";
+import fog from "./assets/fog.png";
+import mist from "./assets/mist.png";
+import wind from "./assets/windy.png";
+import clear from "./assets/clear.png";
+import drizzle from "./assets/drizzle.png";
+import dust from "./assets/dust.png";
+import sand from "./assets/sand.png";
+import snow from "./assets/snow.png";
+import smoke from "./assets/smoke.png";
+import squall from "./assets/squall.png";
+import strom from "./assets/strom.png";
+import tornado from "./assets/tornado.png";
+
 import { useState, useEffect } from "react";
+import { Toast } from "react-bootstrap";
 
 function App() {
+  const [toast, setToast] = useState(false);
   const [userInput, setUserInput] = useState("");
   const [weatherData, setWeatherData] = useState({
     main: {
@@ -22,19 +40,78 @@ function App() {
     name: "City Name",
     timezone: 0,
   });
-  const fetchWeather = async (city) => {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=59fe6f8350cda8bdb8b5bec4e8abbcd5`
-    );
-    if (response.ok) {
-      console.log(response);
-      const data = await response.json();
-      console.log(data);
-      setWeatherData(data);
-    } else {
-      alert("please check again..!!!");
+
+  // Define the state for weather icon
+const [weatherIcon, setWeatherIcon] = useState(clear);
+
+// Fetch weather data and update icon based on API response
+const fetchWeather = async (city) => {
+  const response = await fetch(
+    `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=59fe6f8350cda8bdb8b5bec4e8abbcd5`
+  );
+  if (response.ok) {
+    const data = await response.json();
+    console.log(data);
+    setWeatherData(data);
+
+    // Update weather icon based on main weather condition from the response data
+    const IconChange = data.weather[0].main;
+    console.log(IconChange);
+
+    switch (IconChange) {
+      case "Clouds":
+        setWeatherIcon(cloudy);
+        break;
+      case "Rain":
+        setWeatherIcon(rain);
+        break;
+      case "Wind":
+        setWeatherIcon(wind);
+        break;
+      case "Clear":
+        setWeatherIcon(clear);
+        break;
+      case "Drizzle":
+        setWeatherIcon(drizzle);
+        break;
+      case "Dust":
+        setWeatherIcon(dust);
+        break;
+      case "Fog":
+        setWeatherIcon(fog);
+        break;
+      case "Haze":
+        setWeatherIcon(haze);
+        break;
+      case "Mist":
+        setWeatherIcon(mist);
+        break;
+      case "Sand":
+        setWeatherIcon(sand);
+        break;
+      case "Smoke":
+        setWeatherIcon(smoke);
+        break;
+      case "Snow":
+        setWeatherIcon(snow);
+        break;
+      case "Squall":
+        setWeatherIcon(squall);
+        break;
+      case "Thunderstorm":
+        setWeatherIcon(strom);
+        break;
+      case "Tornado":
+        setWeatherIcon(tornado);
+        break;
+      default:
+        setWeatherIcon(clear);
     }
-  };
+  } else {
+    setToast(true)
+  }
+};
+
 
   // Function to convert timezone offset to local time
   const getLocalTime = (offset) => {
@@ -59,30 +136,25 @@ function App() {
   const formattedDate = formatDate(currentDate);
   const localTime = weatherData ? getLocalTime(weatherData.timezone) : "";
 
-
   const sunrise =
-  weatherData.sys?.sunrise &&
-  new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+    weatherData.sys?.sunrise &&
+    new Date(weatherData.sys.sunrise * 1000).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
 
-const sunset =
-  weatherData.sys?.sunset &&
-  new Date(weatherData.sys.sunset * 1000).toLocaleTimeString("en-US", {
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: true,
-  });
+  const sunset =
+    weatherData.sys?.sunset &&
+    new Date(weatherData.sys.sunset * 1000).toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true,
+    });
 
-
-  
   return (
     <>
-      <div
-        className="d-flex justify-content-center align-items-center bgDiv"
-      >
+      <div className="d-flex justify-content-center align-items-center bgDiv">
         <div
           style={{ height: "550px", width: "1025px" }}
           className="rounded m-5 d-flex justify-content-center align-items-center media"
@@ -99,7 +171,7 @@ const sunset =
           >
             <div
               style={{
-                width: "200px",
+                width: "220px",
                 height: "30px",
                 backgroundColor: "#cbcbcc",
                 borderRadius: "15px",
@@ -115,10 +187,26 @@ const sunset =
               />
               <i
                 onClick={() => fetchWeather(userInput)}
-                className="fa-solid fa-magnifying-glass text-center"
+                className="fa-solid fa-magnifying-glass text-center ms-2"
               ></i>
             </div>
-            <img src={sunClimate} alt="no image" className="climateIcon mb-4" />
+            {/* Toast message */}
+      <Toast className="toast" onClose={() => setToast(false)} show={toast} delay={5000} autohide>
+          <Toast.Header>
+           
+            <strong className="me-auto">OpenWeather</strong>
+          </Toast.Header>
+          <Toast.Body>Please Enter City Name Correctly!</Toast.Body>
+        </Toast>
+
+
+            <img
+              id="icon"
+              src={weatherIcon}
+              alt="no image"
+              className="climateIcon mb-4"
+            />
+
             {weatherData && (
               <>
                 <p className="degree">
@@ -127,7 +215,7 @@ const sunset =
                 </p>
                 <p>{weatherData.weather[0].description}</p>
                 <hr className="mb-4" />
-                <p className="date">{formattedDate }</p>
+                <p className="date">{formattedDate}</p>
                 <p
                   style={{ marginTop: "-10px", fontSize: "15px" }}
                   className="day"
@@ -138,101 +226,83 @@ const sunset =
               </>
             )}
           </div>
-          <div className="gridBg"
-          
-          >
-            <p style={{ marginLeft: "55px" }} className="mt-4">
+          <div className="gridBg">
+            <p style={{ marginLeft: "55px" }} className="mt-5">
               Today
             </p>
             {/* grid Elements */}
             {weatherData && (
               <>
                 <div className="grid mt-2">
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">wind</p>
                     <p className="digit">{weatherData.wind.speed} km/h</p>
                   </div>
 
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Humidity</p>
                     <p className="digit">{weatherData.main.humidity}%</p>
                   </div>
 
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Real Feels</p>
                     <p className="digit">
                       {Math.round(weatherData.main.feels_like - 273.15)}°c
                     </p>
                   </div>
 
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Pressure</p>
                     <p className="digit">{weatherData.main.pressure} mb</p>
                   </div>
 
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Sea Level</p>
                     <p className="digit">{weatherData.main.sea_level}</p>
                   </div>
 
-                  <div
-                    
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Ground Level</p>
                     <p className="digit">{weatherData.main.grnd_level}</p>
                   </div>
 
-                  <div
-                   
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext tempHead">Temp History</p>
                     <div className="d-flex">
-                      <img style={{ height: "15px" }} src={uparrow} alt="" />
+                      <img
+                        className="up"
+                        style={{ height: "15px" }}
+                        src={uparrow}
+                        alt=""
+                      />
                       <p className="digit">
                         {Math.round(weatherData.main.temp_min - 273.15)}°c
                       </p>
                     </div>
                     <div className="d-flex">
-                      <img style={{ height: "15px" }} src={dowarrow} alt="" />
+                      <img
+                        className="down"
+                        style={{ height: "15px" }}
+                        src={dowarrow}
+                        alt=""
+                      />
                       <p className="digit">
                         {Math.round(weatherData.main.temp_max - 273.15)}°c
                       </p>
                     </div>
                   </div>
 
-                  <div
-                   
-                    className="gridElement"
-                  >
+                  <div className="gridElement">
                     <p className="insideGridtext">Sun</p>
                     <div className="d-flex">
-                      <p className="insideGridtext1">Rise</p>
+                      <p className="insideGridtext1 rise">Rise</p>
                       <p className="digit">{sunrise || "0:00 Am"}</p>
                     </div>
                     <div className="d-flex">
-                      <p className="insideGridtext1">Set</p>
-                      <p className="digit">{sunset || "0:00 Am"}</p>
+                      <p className="insideGridtext1 set">Set</p>
+                      <p className="digit">{sunset || "0:00 Pm"}</p>
                     </div>
                   </div>
-
-                  
                 </div>
               </>
             )}
@@ -243,6 +313,11 @@ const sunset =
           </div>
         </div>
       </div>
+
+
+
+
+      
     </>
   );
 }

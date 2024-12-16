@@ -92,6 +92,19 @@ hr{ width: 200px;
 .bgDiv{
      background-color: #d3cccc; height: 100vh; width: 100%; 
 }
+.up{
+    margin-top: -8px;
+}
+.down{
+    margin-top: -5px;
+}
+.toast{
+    width: 200px;
+    height: 100px;
+    margin-bottom: -105px;
+    margin-top: 5px;
+    z-index: 5;
+}
 
 @media (max-width: 768px) {
     .bgDiv{
@@ -114,16 +127,27 @@ hr{ width: 200px;
         
     }
     .gridElement{
-        width: 100px;
+        width: 130px;
         font-size: 12px;
     }
-    .tempHead{
-        font-size: 9px;
-        font-weight: 100;
-    }
+
     .gridBg{
         margin-top: 10px;
       border-radius: 5px;
     }
+    .rise{
+        margin-top: -12px;
+    }
+    .set{
+        margin-top: -11px;
+        margin-right: 6px;
+    }
+    .up{
+        margin-top: -10px;
+    }
+    .down{
+        margin-top: -5px;
+    }
+    
     
 }
